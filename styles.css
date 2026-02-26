@@ -1,0 +1,179 @@
+/* ----------------------------------------------------
+   GLOBAL STYLES
+---------------------------------------------------- */
+body {
+    background-color: #ffffff;
+    color: #2a2a2a;
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    border: 6px solid grey !important;
+
+}
+
+/* ----------------------------------------------------
+   TITLES & HEADERS
+---------------------------------------------------- */
+.dashboard-header,
+.assessment-title,
+.title,
+.subtitle {
+    text-align: center;
+}
+
+.title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 28px;
+}
+
+.subtitle {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 18px;
+}
+
+/* ----------------------------------------------------
+   SCORE SUMMARY
+---------------------------------------------------- */
+.score-summary {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.score-item {
+    margin: 4px 0;
+}
+
+/* ----------------------------------------------------
+   CARD & GRID LAYOUT
+---------------------------------------------------- */
+.card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-bottom: 32px;
+    box-sizing: border-box;
+
+    /* NEW: full neutral border */
+    border: 1px solid #e0e0e0;
+}
+
+/* Perfect 2-column grid for paradox charts */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* One card per row on smaller screens */
+@media (max-width: 900px) {
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Individual mini paradox chart cards */
+.chart-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    border: 2px solid blue !important;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ----------------------------------------------------
+   CHART CANVAS FIXES
+---------------------------------------------------- */
+canvas {
+    width: 100% !important;
+    display: block;
+}
+
+/* Radar chart sizing */
+#radarChart {
+    width: 100% !important;
+    max-width: 700px;
+    height: 420px !important;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Mini paradox charts */
+.chart-card canvas {
+    height: 280px !important;
+}
+
+/* ----------------------------------------------------
+   PARADOX DEFINITIONS
+---------------------------------------------------- */
+.chart-definition {
+    font-size: 0.85rem;
+    color: #444;
+    margin-top: 10px;
+    line-height: 1.4;
+}
+
+/* ----------------------------------------------------
+   NARRATIVE SECTIONS
+---------------------------------------------------- */
+.narrative-section {
+    margin-bottom: 16px;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.value {
+    margin-bottom: 12px;
+}
+
+.summary-line,
+.overview-line {
+    font-size: 1rem;
+    margin: 6px 0;
+    text-align: center;
+    color: #333;
+}
+
+/* ----------------------------------------------------
+   COLORED LEFT BORDERS FOR INSIGHT CARDS
+---------------------------------------------------- */
+
+.card-paradox-summary {
+    border: 6px solid #4A90E2; /* Blue */
+}
+
+.card-leadership-overview {
+    border: 6px solid #7B61FF; /* Purple */
+}
+
+.card-strategy {
+    border: 6px solid #50C878; /* Emerald Green */
+}
+
+.card-people {
+    border: 6px solid #FF8A65; /* Soft Orange */
+}
+
+.card-decision {
+    border: 6px solid #F4C542; /* Gold */
+}
+
+.card-transformation {
+    border: 6px solid #29B6F6; /* Light Blue */
+}
+
+.card-growth {
+    border: 6px solid #AB47BC; /* Violet */
+}
+

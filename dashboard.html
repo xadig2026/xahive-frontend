@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KLP Assessment Dashboard</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="styles.css?v=10001">
+</head>
+
+<body>
+
+    <!-- Archetype -->
+    <div class="card">
+        <div class="title" id="archetype">Loading...</div>
+    </div>
+
+    <!-- Radar Chart -->
+    <div class="card">
+        <div class="subtitle">Paradox Profile (Radar Chart)</div>
+        <canvas id="radarChart"></canvas>
+
+        <p class="chart-definition">
+            The Paradox Profile shows your leadership pattern across five tensions that every modern
+            leader must navigate. Each axis reflects your relative pull toward one pole or the other,
+            revealing where you show strong preferences, where you balance competing priorities, and
+            how consistently you apply your leadership style across different contexts.
+        </p>
+    </div>
+
+    <!-- Mini Charts -->
+    <div class="card">
+        <div class="chart-grid">
+
+            <div class="chart-card">
+                <canvas id="chart-paradox-1"></canvas>
+                <p class="chart-definition">
+                    Shows whether you prioritize mission‑aligned, outcome‑driven digital investments (Strategic Intent)
+                    or rapid adoption of emerging technologies to maintain momentum (Technology Enthusiasm).
+                </p>
+            </div>
+
+            <div class="chart-card">
+                <canvas id="chart-paradox-2"></canvas>
+                <p class="chart-definition">
+                    Shows whether you emphasize organization‑wide standardization and integration (Enterprise Scale)
+                    or empower teams to experiment and innovate locally (Local Innovation).
+                </p>
+            </div>
+
+            <div class="chart-card">
+                <canvas id="chart-paradox-3"></canvas>
+                <p class="chart-definition">
+                    Shows whether you lead transformation through people, skills, and culture (People & Culture)
+                    or through strong technical foundations and architecture (Platforms & Architecture).
+                </p>
+            </div>
+
+            <div class="chart-card">
+                <canvas id="chart-paradox-4"></canvas>
+                <p class="chart-definition">
+                    Shows whether you focus on automating existing processes for efficiency (Automation Efficiency)
+                    or redesigning services end‑to‑end for better outcomes and user experience (Service Redesign).
+                </p>
+            </div>
+
+            <div class="chart-card">
+                <canvas id="chart-paradox-5"></canvas>
+                <p class="chart-definition">
+                    Shows whether you push for rapid progress and experimentation (Innovation Speed)
+                    or emphasize governance, safety, trust, and responsible AI (Risk, Security & Trust).
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Paradox Summary -->
+    <div class="card card-paradox-summary" id="paradox-summary-card">
+        <div class="subtitle">Paradox Summary</div>
+        <div class="summary-line" id="summary-most-aligned"></div>
+        <div class="summary-line" id="summary-most-stretched"></div>
+        <div class="summary-line" id="summary-overall"></div>
+        <div class="summary-line" id="summary-interpretation"></div>
+    </div>
+
+    <!-- Leadership Profile Overview -->
+    <div class="card card-leadership-overview" id="leadership-overview-card">
+        <div class="subtitle">Leadership Profile Overview</div>
+        <div class="overview-line" id="overview-archetype"></div>
+        <div class="overview-line" id="overview-balance"></div>
+        <div class="overview-line" id="overview-strength"></div>
+    </div>
+
+    <!-- Narrative Sections (Option B) -->
+
+    <div class="card card-strategy">
+        <div class="subtitle">Strategic Orientation</div>
+        <div class="value" id="narrative-strategy"></div>
+    </div>
+
+    <div class="card card-people">
+        <div class="subtitle">People & Culture Impact</div>
+        <div class="value" id="narrative-people"></div>
+    </div>
+
+    <div class="card card-decision">
+        <div class="subtitle">Decision & Execution Style</div>
+        <div class="value" id="narrative-decision"></div>
+    </div>
+
+    <div class="card card-transformation">
+        <div class="subtitle">Transformation Approach</div>
+        <div class="value" id="narrative-transformation"></div>
+    </div>
+
+    <div class="card card-growth">
+        <div class="subtitle">Leadership Growth Path</div>
+        <div class="value" id="narrative-growth"></div>
+    </div>
+
+    <!-- Dashboard Logic -->
+    <script src="dashboards.js"></script>
+
+</body>
+</html>
