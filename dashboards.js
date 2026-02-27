@@ -224,7 +224,7 @@ function buildMirroredParadoxSummaryChart(data) {
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
-            layout: { padding: { left: 140, right: 140 } },
+            layout: { padding: { left: 200, right: 200 } },
             scales: {
                 x: {
                     min: -10,
@@ -295,3 +295,4 @@ window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => initializeDashboard(), 200);
 });
+
