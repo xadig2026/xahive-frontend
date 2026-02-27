@@ -17,6 +17,7 @@ document.querySelectorAll(".options").forEach(group => {
     }
 });
 
+
 // ------------------------------------------------------------
 // SUBMIT HANDLER
 // ------------------------------------------------------------
@@ -43,6 +44,12 @@ document.getElementById("submitAssessment").addEventListener("click", () => {
     }
 
     // ------------------------------------------------------------
+    // SHOW LOADING SPINNER (NEW)
+    // ------------------------------------------------------------
+    const loader = document.getElementById("loadingIndicator");
+    if (loader) loader.style.display = "block";
+
+    // ------------------------------------------------------------
     // POST TO BACKEND
     // ------------------------------------------------------------
     fetch("https://xahive-backend-app.jollymeadow-e3d0425f.canadacentral.azurecontainerapps.io/score", {
@@ -67,5 +74,11 @@ document.getElementById("submitAssessment").addEventListener("click", () => {
     .catch(err => {
         console.error("Assessment submission error:", err);
         alert("Something went wrong submitting your assessment. Check console for details.");
+    })
+    .finally(() => {
+        // ------------------------------------------------------------
+        // HIDE LOADING SPINNER (NEW)
+        // ------------------------------------------------------------
+        if (loader) loader.style.display = "none";
     });
 });
