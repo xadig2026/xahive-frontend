@@ -1,8 +1,8 @@
 // ---------------------------------------------
-// KLP DASHBOARD (UPDATED + CLEANED VERSION)
+// KLP DASHBOARD (UPDATED WITH MIRRORED SUMMARY)
 // ---------------------------------------------
 
-let radarChartInstance = null;
+let paradoxSummaryChartInstance = null;
 let paradoxCharts = [];
 
 // ---------------------------------------------
@@ -26,18 +26,23 @@ function initializeDashboard() {
 
     const data = JSON.parse(stored);
 
+    // Archetype title card
     document.getElementById("archetype").innerText = data.archetype;
 
+    // Textual sections
     buildParadoxSummary(data);
     buildLeadershipOverview(data);
     buildNarrativeSections(data);
 
-    buildRadarChart(data);
+    // New visual summary chart (replaces radar)
+    buildParadoxSummaryChart(data);
+
+    // Existing mini paradox charts
     buildParadoxCharts(data);
 }
 
 // ---------------------------------------------
-// PARADOX SUMMARY
+// PARADOX SUMMARY (TEXT)
 // ---------------------------------------------
 function buildParadoxSummary(data) {
     const deltas = data.scores;
@@ -68,7 +73,7 @@ function buildParadoxSummary(data) {
 }
 
 // ---------------------------------------------
-// LEADERSHIP OVERVIEW
+// LEADERSHIP OVERVIEW (TEXT)
 // ---------------------------------------------
 function buildLeadershipOverview(data) {
     const deltas = data.scores;
@@ -96,7 +101,7 @@ function buildLeadershipOverview(data) {
 }
 
 // ---------------------------------------------
-// NARRATIVE SECTIONS (Option B)
+// NARRATIVE SECTIONS
 // ---------------------------------------------
 function buildNarrativeSections(data) {
     const n = data.narrative;
@@ -123,49 +128,176 @@ function buildNarrativeSections(data) {
 }
 
 // ---------------------------------------------
-// RADAR CHART
+// PARADOX SUMMARY CHART (MIRRORED DIFFERENTIAL)
 // ---------------------------------------------
-function buildRadarChart(data) {
-    const ctx = document.getElementById("radarChart");
+function buildParadoxSummaryChart(data) {
+    const ctx = document.getElementById("radarChart"); // reuse existing canvas
 
-    if (radarChartInstance) radarChartInstance.destroy();
+    if (!ctx) {
+        console.error("Canvas with id 'radarChart' not found.");
+        return;
+    }
 
-    radarChartInstance = new Chart(ctx, {
-        type: "radar",
+    if (paradoxSummaryChartInstance) {
+        paradoxSummaryChartInstance.destroy();
+    }
+
+    const P = data.poles;
+    const D = data.scores;
+
+    const labels = [
+        "Strategic Intent vs Technology Enthusiasm",
+        "Enterprise Scale vs Local Innovation",
+        "People & Culture vs Platforms & Architecture",
+        "Automation Efficiency vs Service Redesign",
+        "Innovation Speed vs Risk, Security & Trust"
+    ];
+
+    const pole1Scores = [
+        P.SI_total,
+        P.ES_total,
+        P.PC_total,
+        P.AE_total,
+        P.IS_total
+    ];
+
+    const pole2Scores = [
+        P.TE_total,
+        P.LI_total,
+        P.PA_total,
+        P.SR_total,
+        P.RT_total
+    ];
+
+    // Differentials already provided in data.scores (A–E)
+    const diffs = [
+        D.A,
+        D.B,
+        D.C,
+        D.D,
+        D.E
+    ];
+
+    // Custom plugin to draw labels (diff + pole scores) inside bars when possible
+    const barLabelPlugin = {
+        id: "barLabelPlugin",
+        afterDatasetsDraw(chart, args, pluginOptions) {
+            const { ctx } = chart;
+            const meta = chart.getDatasetMeta(0);
+            ctx.save();
+            ctx.font = "12px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+            ctx.textBaseline = "middle";
+
+            meta.data.forEach((bar, index) => {
+                const value = diffs[index];
+                const p1 = pole1Scores[index];
+                const p2 = pole2Scores[index];
+
+                const sign = value > 0 ? "+" : value < 0 ? "-" : "";
+                const absVal = Math.abs(value);
+                const labelText = `${sign}${absVal} (${p1} vs ${p2})`;
+
+                const barCenterX = bar.x;
+                const barCenterY = bar.y;
+                const barWidth = bar.width; // signed width (left/right)
+
+                const textWidth = ctx.measureText(labelText).width + 10; // padding
+
+                // Decide if we can draw inside the bar
+                const canFitInside = Math.abs(barWidth) > textWidth;
+
+                if (canFitInside) {
+                    // Inside bar: white text
+                    ctx.fillStyle = "#FFFFFF";
+                    const textX = barCenterX + (barWidth > 0 ? 0 : 0); // center on bar center
+                    ctx.textAlign = "center";
+                    ctx.fillText(labelText, textX, barCenterY);
+                } else {
+                    // Outside bar: dark text, just beyond bar end
+                    ctx.fillStyle = "#333333";
+                    ctx.textAlign = barWidth > 0 ? "left" : "right";
+                    const offset = 6;
+                    const textX = barCenterX + (barWidth > 0 ? barWidth + offset : barWidth - offset);
+                    ctx.fillText(labelText, textX, barCenterY);
+                }
+            });
+
+            ctx.restore();
+        }
+    };
+
+    paradoxSummaryChartInstance = new Chart(ctx, {
+        type: "bar",
         data: {
-            labels: [
-                "Strategic Intent vs Tech Enthusiasm",
-                "Enterprise Scale vs Local Innovation",
-                "People & Culture vs Platforms & Architecture",
-                "Automation Efficiency vs Service Redesign",
-                "Innovation Speed vs Risk & Security"
-            ],
+            labels: labels,
             datasets: [{
-                label: "Paradox Profile",
-                data: [
-                    data.scores.A,
-                    data.scores.B,
-                    data.scores.C,
-                    data.scores.D,
-                    data.scores.E
-                ],
-                backgroundColor: "rgba(54, 162, 235, 0.2)",
-                borderColor: "rgba(54, 162, 235, 1)",
-                borderWidth: 2
+                label: "Paradox Differential",
+                data: diffs,
+                backgroundColor: diffs.map(v =>
+                    v > 0 ? "#4CAF50" : v < 0 ? "#FF9800" : "#9E9E9E"
+                ),
+                borderRadius: 4
             }]
         },
         options: {
+            indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: 20
+            },
             scales: {
-                r: {
+                x: {
                     min: -10,
                     max: 10,
-                    ticks: { stepSize: 2 }
+                    grid: {
+                        color: "#e0e0e0"
+                    },
+                    ticks: {
+                        stepSize: 2,
+                        color: "#333333",
+                        font: {
+                            size: 11
+                        }
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: "#333333",
+                        font: {
+                            size: 12,
+                            weight: "500"
+                        }
+                    }
                 }
             },
-            layout: { padding: 20 }
-        }
+            plugins: {
+                legend: {
+                    display: false // legend handled in static HTML text
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            const idx = context.dataIndex;
+                            const diff = diffs[idx];
+                            const p1 = pole1Scores[idx];
+                            const p2 = pole2Scores[idx];
+                            const sign = diff > 0 ? "+" : diff < 0 ? "-" : "";
+                            const absVal = Math.abs(diff);
+                            return [
+                                `Differential: ${sign}${absVal}`,
+                                `Pole 1: ${p1}/20`,
+                                `Pole 2: ${p2}/20`
+                            ];
+                        }
+                    }
+                }
+            },
+            animation: {
+                duration: 600
+            }
+        },
+        plugins: [barLabelPlugin]
     });
 }
 
@@ -215,6 +347,7 @@ function buildParadoxCharts(data) {
 // ---------------------------------------------
 function createParadoxChart(canvasId, pole1Label, pole2Label, pole1Score, pole2Score, delta) {
     const ctx = document.getElementById(canvasId);
+    if (!ctx) return null;
 
     return new Chart(ctx, {
         type: "bar",
@@ -226,19 +359,46 @@ function createParadoxChart(canvasId, pole1Label, pole2Label, pole1Score, pole2S
             ],
             datasets: [{
                 data: [pole1Score, pole2Score, delta],
-                backgroundColor: ["#4CAF50", "#FF9800", "#2196F3"]
+                backgroundColor: ["#4CAF50", "#FF9800", "#2196F3"],
+                borderRadius: 4
             }]
         },
         options: {
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.label}: ${context.raw}`;
+                        }
+                    }
+                }
+            },
             scales: {
                 x: {
                     min: -10,
                     max: 20,
-                    ticks: { stepSize: 5 }
+                    ticks: {
+                        stepSize: 5,
+                        color: "#333333",
+                        font: {
+                            size: 11
+                        }
+                    },
+                    grid: {
+                        color: "#e0e0e0"
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: "#333333",
+                        font: {
+                            size: 11
+                        }
+                    }
                 }
             }
         }
