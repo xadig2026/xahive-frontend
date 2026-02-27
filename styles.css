@@ -94,15 +94,20 @@ canvas {
     display: block;
 }
 
-/* NEW: Visual Summary Chart sizing */
-#radarChart {
-    width: 100% !important;
-    max-width: 1200px;   /* or remove this line entirely */
-    height: 420px !important;
-    margin: 0 auto;
-    display: block;
+/* NEW: Visual Summary Chart sizing — FIXED FOR HORIZONTAL LABELS */
+#radarChartContainer {
+    width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
+#radarChart {
+    width: 100% !important;
+    max-width: none !important;
+    height: 420px !important; /* keep your height */
+    display: block;
+    margin: 0 auto;
+}
 
 /* Mini paradox charts */
 .chart-card canvas {
