@@ -17,17 +17,33 @@
         <div class="title" id="archetype">Loading...</div>
     </div>
 
-    <!-- Radar Chart -->
+    <!-- Visual Summary Chart (Replaces Radar Chart) -->
     <div class="card">
-        <div class="subtitle">Paradox Profile (Radar Chart)</div>
-        <canvas id="radarChart"></canvas>
+        <div class="title" style="font-size: 1.4rem; font-weight: 600; margin-bottom: 6px;">
+            Digital Transformation Leadership Profile
+        </div>
 
-        <p class="chart-definition">
-            The Paradox Profile shows your leadership pattern across five tensions that every modern
-            leader must navigate. Each axis reflects your relative pull toward one pole or the other,
-            revealing where you show strong preferences, where you balance competing priorities, and
-            how consistently you apply your leadership style across different contexts.
-        </p>
+        <div class="subtitle" style="margin-bottom: 20px;">
+            Visual Summary of KLP Assessment Scores
+        </div>
+
+        <canvas id="radarChart" style="height: 360px;"></canvas>
+
+        <div class="chart-legend" style="margin-top: 20px; font-size: 0.9rem; color: #333;">
+            <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                <div style="width: 16px; height: 6px; background-color: #4CAF50; margin-right: 8px;"></div>
+                Green bars → Dominant orientation toward Pole 1 (left score)
+            </div>
+
+            <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                <div style="width: 16px; height: 6px; background-color: #FF9800; margin-right: 8px;"></div>
+                Orange bars → Dominant orientation toward Pole 2 (right score)
+            </div>
+
+            <div style="margin-top: 6px;">
+                Scores near zero indicate balanced integration of both poles.
+            </div>
+        </div>
     </div>
 
     <!-- Mini Charts -->
@@ -86,7 +102,7 @@
         <div class="summary-line" id="summary-interpretation"></div>
     </div>
 
-    <!-- Leadership Profile Overview -->
+    <!-- Leadership Profile Overview (Blue Box) -->
     <div class="card card-leadership-overview" id="leadership-overview-card">
         <div class="subtitle">Leadership Profile Overview</div>
         <div class="overview-line" id="overview-archetype"></div>
@@ -129,5 +145,3 @@
 
 </body>
 </html>
-
-
