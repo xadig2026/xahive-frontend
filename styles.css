@@ -7,7 +7,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 40px;
     border: 6px solid grey !important;
-
 }
 
 /* ----------------------------------------------------
@@ -57,8 +56,6 @@ body {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     margin-bottom: 32px;
     box-sizing: border-box;
-
-    /* NEW: full neutral border */
     border: 1px solid #e0e0e0;
 }
 
@@ -97,11 +94,11 @@ canvas {
     display: block;
 }
 
-/* Radar chart sizing */
+/* NEW: Visual Summary Chart sizing */
 #radarChart {
     width: 100% !important;
-    max-width: 700px;
-    height: 420px !important;
+    max-width: 900px;
+    height: 360px !important;
     margin: 0 auto;
     display: block;
 }
@@ -148,7 +145,6 @@ canvas {
 /* ----------------------------------------------------
    COLORED LEFT BORDERS FOR INSIGHT CARDS
 ---------------------------------------------------- */
-
 .card-paradox-summary {
     border: 6px solid #4A90E2; /* Blue */
 }
@@ -175,5 +171,32 @@ canvas {
 
 .card-growth {
     border: 6px solid #AB47BC; /* Violet */
+}
+
+/* ----------------------------------------------------
+   NEW: LEGEND STYLING FOR VISUAL SUMMARY CHART
+---------------------------------------------------- */
+.chart-legend {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.4;
+}
+
+.chart-legend div {
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.chart-legend div:last-child {
+    margin-bottom: 0;
+}
+
+.chart-legend .color-box {
+    width: 16px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 2px;
 }
 
